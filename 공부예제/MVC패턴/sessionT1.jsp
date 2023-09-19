@@ -17,6 +17,19 @@
 <p class="normalbold">안녕하세요. jsp 홈페이지입니다.<br>
   사이트에 접속하기 위해서 사용자 인증 절차가 필요합니다.</p>
 <p class="normalbold">ID와 PassWord를 입력하세요.</p>
+<%
+    String cookieId="";
+	Cookie []cookies = request.getCookies();
+	if(cookies!=null){//한개 이상의 쿠키값이 저장되어 있고
+		 for(Cookie cookie : cookies){
+			 if("ssafy_id".equals(cookie.getName())){
+				 cookieId = cookie.getValue();
+				break; 
+			 }
+		 }//for
+	}
+%>
+
 <form name="inputForm" action="sessionT2.jsp" method="post">
   <table width="350" border="1" cellspacing="0" cellpadding="0" bordercolor="#000000">
     <tr> 
@@ -24,7 +37,7 @@
         <div align="center"><font color="#000000">아이디</font></div>
       </td>
       <td class="normal" width="75%"> 
-        <input type="text" name="id">
+        <input type="text" name="id" value="<%= cookieId%>">
       </td>
     </tr>
     <tr> 
@@ -37,6 +50,12 @@
     </tr>
   </table>
   <br>
+     <% if(!cookieId.equals("")){ %>
+        <input type="checkbox" name="saveid" value="ok" checked>
+      <%}else{ %>
+      <input type="checkbox" name="saveid" value="ok">
+      <% } %> 
+               아이디 저장하기
   <p>
     <!-- <input type="submit" name="Submit" value="확인"> -->
     <button>확인</button>

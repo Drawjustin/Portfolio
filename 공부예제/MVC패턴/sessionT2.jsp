@@ -14,6 +14,8 @@
 	</head>
 <%-- sessionT2.jsp --%>
 <%
+     
+
    /*
          로그인폼에 입력된 아이디와 비밀번호를 검사(인증)!!
         ---> DB비교
@@ -34,10 +36,63 @@
       //String str2 = map.get("park");//str2 ==> null
       
     //클라이언트 입력데이터 얻기
-
-      
+     String id = request.getParameter("id");
+     String pass = request.getParameter("pass");     
+     
     //아이디, 비번 검사 ==> 페이지 이동
-      
+      //map.get(key);
+     String dbPass =  map.get(id);
+     if(dbPass == null) {//  ==> id가 존재X
+     
+         //로그인페이지(sessionT1.jsp)로 이동!!		 
+    	 response.sendRedirect("sessionT1.jsp"); 
+     }else{//==> id가 존재 O
+    	 if(dbPass.equals(pass)){//id가 존재 O,  pass 일치
+    		 
+    		 //로그인 성공을 하였다면 세션을 부여!! (세션로그인)
+    		 session.setAttribute("login", "SUCCESS");
+    	 
+    		 String saveid = request.getParameter("saveid");
+    	     System.out.println("saveid>>>"+saveid);//null,  "ok"
+    	     
+    	     if("ok".equals(saveid)){//'아이디 저장하기' v체크했다면
+    	    	 //Cookie cookie = new Cookie(name,value);
+    	    	 Cookie cookie = new Cookie("ssafy_id",id);
+    	    	 
+    	    	 cookie.setPath(request.getContextPath());
+    	    	 //cookie.setMaxAge(60);//1분간 저장
+    	    	 cookie.setMaxAge(60*60*24*365*40);//40년간 저장
+    	    	 //크롬의 경우 400일이 최대
+    	    	 
+    	    	 //클라이언트(브라우저)에서 저장해죠 전달!!
+    	    	 response.addCookie(cookie);
+    	    	 
+    	     }else{//'아이디 저장하기' v체크하지 않았다면
+    	    	 Cookie []cookies = request.getCookies();
+    	         if(cookies!=null){//한개 이상의 쿠키값이 저장되어 있고
+    	        	 for(Cookie cookie : cookies){
+    	        		 if("ssafy_id".equals(cookie.getName())){
+    	        			 //쿠키 만료 ==> 쿠키 삭제
+    	        			 cookie.setPath(request.getContextPath());
+    	        		     cookie.setMaxAge(0);
+    	        			 
+    	        		   //클라이언트(브라우저)에서 저장해죠 전달!!
+    	        	    	 response.addCookie(cookie);
+    	        			break; 
+    	        		 }
+    	        	 }//for
+    	         }
+    	     }//else
+    	 
+    	 
+    		 
+    	 }else{//id가 존재 O,  pass 불일치
+    		//로그인페이지(sessionT1.jsp)로 이동!!
+    		 response.sendRedirect("sessionT1.jsp");
+    	 }
+     }
+     
+     
     //sessionT1.jsp에 입력된 id,pass를 map과 비교해서 만약 일치하지 않는다면 sessionT1.jsp로 이동~!!
 
 %>
