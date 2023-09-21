@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Enjoy Trip</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/admin.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+      integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=acb075b1418d6a0a87578f1bcdd7f4ce&libraries=clusterer"
+    ></script>
+  </head>
+
+  <body>
+    <!--Main Navigation-->
+    <header>
+      <!-- Sidebar -->
+      <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
+        <div class="position-sticky">
+          <div class="list-group list-group-flush mx-3 mt-4">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action py-2 ripple"
+              aria-current="true"
+            >
+              <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>관광지 검색</span>
+            </a>
+            <a
+              href="../loginpage/update _page.html"
+              class="list-group-item list-group-item-action py-2 ripple"
+              ><i class="fas fa-lock fa-fw me-3"></i><span>개인정보 수정</span></a
+            >
+          </div>
+        </div>
+      </nav>
+      <!-- Sidebar -->
+
+      <!-- Navbar -->
+      <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+          <!-- Toggle button -->
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#sidebarMenu"
+            aria-controls="sidebarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <!-- Brand -->
+          <a class="navbar-brand nav-link" href="../mainpage/main_page.html">
+            <strong>EnjoyTrip</strong>
+          </a>
+          <!-- Right links -->
+          <ul class="navbar-nav ms-auto d-flex flex-row">
+            <!-- Avatar -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-mdb-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+                  class="rounded-circle"
+                  height="22"
+                  alt=""
+                  loading="lazy"
+                />
+              </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="navbarDropdownMenuLink"
+                onclick="logout()"
+              >
+                <li><a class="dropdown-item" href="../loginpage/login_page.html">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!-- Container wrapper -->
+      </nav>
+      <!-- Navbar -->
+    </header>
+    <!--Main Navigation-->
+
+    <!--Main layout-->
+    <main style="margin-top: 58px">
+      <div class="container pt-4">
+        <!-- Section: Main chart -->
+        <section class="mb-4">
+          <div class="card">
+            <div class="card-header py-3">
+              <h5 class="mb-0 text-center"><strong>관광 명소 검색</strong></h5>
+            </div>
+            <div class="card-body m-auto" style="width: 1200px; height: 750px">
+              <select name="sido" id="sidoSelect">
+                <option value="-1">시도</option>
+              </select>
+              <select name="sigungu" id="sigunguSelect">
+                <option value="-1">시군구</option>
+              </select>
+              <input class="checkbox" type="checkbox" name="관광지" id="관광지" value="12" />
+              <label for="관광지">관광지</label>
+              <input class="checkbox" type="checkbox" name="문화시설" id="문화시설" value="14" />
+              <label for="문화시설">문화시설</label>
+              <input
+                class="checkbox"
+                type="checkbox"
+                name="행사/공연/축제"
+                id="행사/공연/축제"
+                value="15"
+              />
+              <label for="행사/공연/축제">행사/공연/축제</label>
+              <input class="checkbox" type="checkbox" name="여행코스" id="여행코스" value="25" />
+              <label for="여행코스">여행코스</label>
+              <input class="checkbox" type="checkbox" name="레포츠" id="레포츠" value="28" />
+              <label for="레포츠">레포츠</label>
+              <input class="checkbox" type="checkbox" name="숙박" id="숙박" value="32" />
+              <label for="숙박">숙박</label>
+              <input class="checkbox" type="checkbox" name="쇼핑" id="쇼핑" value="38" />
+              <label for="쇼핑">쇼핑</label>
+              <input class="checkbox" type="checkbox" name="음식점" id="음식점" value="39" />
+              <label for="음식점">음식점</label>
+              <button type="button" class="btn btn-rounded float-end btn-primary" id="searchBtn">
+                조회하기
+              </button>
+              <hr />
+              <div id="map" style="width: 1170px; height: 630px"></div>
+            </div>
+          </div>
+        </section>
+        <!-- Section: Main chart -->
+
+        <!--Secltion: Sales Performance KPIs-->
+        <section class="mb-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive" id="secondtb" style="overflow-y: scroll; height: 300px">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th scope="col">장소 이름 및 위치</th>
+                      <th scope="col">장소 사진</th>
+                      <th scope="col">장소 전화번호</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr scope="row" style="height: 200px">
+                      <td class="w-25 p-3">지역을 선택해주세요</td>
+                      <td class="w-25 p-3">지역을 선택해주세요</td>
+                      <td class="w-25 p-3">지역을 선택해주세요</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!--Main layout-->
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=acb075b1418d6a0a87578f1bcdd7f4ce"></script>
+    <script type="text/javascript" src="js/map.js"></script>
+  </body>
+</html>
